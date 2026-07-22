@@ -39,6 +39,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "BookingService\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "BookingService\Adapters\Data\Data.csproj", "{543A2F8A-2325-427C-A93B-A0BCA5B075D7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Booking", "Booking", "{1D974012-9A07-49B8-AC01-B5F36C46DA74}"
+	ProjectSection(SolutionItems) = preProject
+		BookingService\Test\Domain\DomainTests\DomainTests\StateMachineTests.cs = BookingService\Test\Domain\DomainTests\DomainTests\StateMachineTests.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +99,7 @@ Global
 		{FD619B4E-E6DC-A2FB-E310-8B44D3B597D6} = {8915988F-30FC-4435-A1D6-824733A34BA5}
 		{BAF33E92-FFAC-E963-F35E-6060612782B7} = {122E25D5-4187-499D-9572-2BF3AB137A98}
 		{543A2F8A-2325-427C-A93B-A0BCA5B075D7} = {F075F619-C6D4-4572-AAEA-220C2EE3AA54}
+		{1D974012-9A07-49B8-AC01-B5F36C46DA74} = {E118D962-1011-4875-A438-A3B07E0101FF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {699A57F3-EA2B-4011-BC36-63D5D4A8248C}
