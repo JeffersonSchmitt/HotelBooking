@@ -16,6 +16,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{F075F619-C6D4-4572-AAEA-220C2EE3AA54}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Consumers", "Consumers", "{8EF6B0F1-E6E0-41EB-8326-647FC161DF76}"
+	ProjectSection(SolutionItems) = preProject
+		BookingService\Adapters\Data\HotelDbContext.cs = BookingService\Adapters\Data\HotelDbContext.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{529992A7-C465-42FF-99B7-3E409CC2B720}"
 EndProject
