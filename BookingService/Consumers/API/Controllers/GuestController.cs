@@ -14,8 +14,8 @@ namespace API.Controllers
 
         public GuestController(ILogger<GuestController> logger, IGuestManager guestManager)
         {
-            _logger=logger;
-            _guestManager=guestManager;
+            _logger = logger;
+            _guestManager = guestManager;
         }
 
         [HttpPost(Name = "CreateGuest")]
@@ -28,9 +28,25 @@ namespace API.Controllers
 
             var result = await _guestManager.CreateGuest(request);
 
-            if(result.Success) return Created("Hospede cadastrado com sucesso", result.Data);
+            if (result.Success) return Created("Hospede cadastrado com sucesso", result.Data);
 
-            if (result.ErrorCode==Application.Response.ErrorCodes.NOT_FOUND)
+            if (result.ErrorCode == Application.Response.ErrorCodes.NOT_FOUND)
+            {
+                return BadRequest(result);
+            }
+            else if (result.ErrorCode == Application.Response.ErrorCodes.INVALID_DOCUMENT)
+            {
+                return BadRequest(result);
+            }
+            else if (result.ErrorCode == Application.Response.ErrorCodes.MISSING_REQUIRED_INFORMATION)
+            {
+                return BadRequest(result);
+            }
+            else if (result.ErrorCode == Application.Response.ErrorCodes.INVALID_EMAIL)
+            {
+                return BadRequest(result);
+            }
+            else if (result.ErrorCode == Application.Response.ErrorCodes.COULD_NOT_STORE_DATA)
             {
                 return BadRequest(result);
             }
