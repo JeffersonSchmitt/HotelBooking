@@ -15,11 +15,11 @@ namespace Domain.Entities
 
         private void ValidateState()
         {
-            if (Document.IdNumber == null || Document.IdNumber.Length <= 3 || Document.DocumentType <= 0)
+            if (Document.IdNumber == null || string.IsNullOrEmpty(Document.IdNumber) || Document.IdNumber.Length <= 3 || Document.DocumentType <= 0)
             {
                 throw new InvalidPersonDocumentIdException();
             }
-            if (Name == null || Surname == null || Email == null)
+            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Surname) || string.IsNullOrEmpty(Email))
             {
                 throw new MissingRequiredInformationException();
             }
