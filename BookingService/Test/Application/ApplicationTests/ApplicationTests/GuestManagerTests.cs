@@ -1,8 +1,10 @@
 using Application;
 using Application.Guest.DTO;
 using Application.Guest.Requests;
-using Domain.Entities;
-using Domain.Ports;
+using Domain.Guest.Entities;
+using Domain.Guest.Enums;
+using Domain.Guest.Ports;
+using Domain.Guest.ValueObjects;
 using Moq;
 
 namespace ApplicationTests
@@ -33,7 +35,7 @@ namespace ApplicationTests
             int expectedId = 222;
 
             var fakeRepository = new Mock<IGuestRepository>();
-            fakeRepository.Setup(x => x.Create(It.IsAny<Guest>())).Returns(Task.FromResult(expectedId));
+            fakeRepository.Setup(x => x.Create(It.IsAny<GuestEntity>())).Returns(Task.FromResult(expectedId));
             _guestManager = new GuestManager(fakeRepository.Object);
 
 
@@ -66,7 +68,7 @@ namespace ApplicationTests
             };
 
             var fakeRepository = new Mock<IGuestRepository>();
-            fakeRepository.Setup(x => x.Create(It.IsAny<Guest>())).Returns(Task.FromResult(222));
+            fakeRepository.Setup(x => x.Create(It.IsAny<GuestEntity>())).Returns(Task.FromResult(222));
             _guestManager = new GuestManager(fakeRepository.Object);
 
 
@@ -100,7 +102,7 @@ namespace ApplicationTests
             };
 
             var fakeRepository = new Mock<IGuestRepository>();
-            fakeRepository.Setup(x => x.Create(It.IsAny<Guest>())).Returns(Task.FromResult(222));
+            fakeRepository.Setup(x => x.Create(It.IsAny<GuestEntity>())).Returns(Task.FromResult(222));
             _guestManager = new GuestManager(fakeRepository.Object);
 
 
@@ -130,7 +132,7 @@ namespace ApplicationTests
             };
 
             var fakeRepository = new Mock<IGuestRepository>();
-            fakeRepository.Setup(x => x.Create(It.IsAny<Guest>())).Returns(Task.FromResult(222));
+            fakeRepository.Setup(x => x.Create(It.IsAny<GuestEntity>())).Returns(Task.FromResult(222));
             _guestManager = new GuestManager(fakeRepository.Object);
 
 
@@ -149,7 +151,7 @@ namespace ApplicationTests
         public async Task Should_Return_GuestNotFound_When_GuestDoesntExist()
         {
             var fakeRepository = new Mock<IGuestRepository>();
-            fakeRepository.Setup(x => x.Get(323)).Returns(Task.FromResult<Guest>(null));
+            fakeRepository.Setup(x => x.Get(323)).Returns(Task.FromResult<GuestEntity>(null));
             _guestManager = new GuestManager(fakeRepository.Object);
             var res = await _guestManager.GetGuest(323);
             Assert.IsNotNull(res);
@@ -163,14 +165,14 @@ namespace ApplicationTests
         {
             var fakeRepository = new Mock<IGuestRepository>();
 
-            var guest = new Guest
+            var guest = new GuestEntity
             {
                 Id = 323,
                 Name = "John",
-                Document = new Domain.ValueObjects.PersonId
+                Document = new PersonId
                 {
                     IdNumber = "123456789",
-                    DocumentType = Domain.Enums.DocumentsType.Passport
+                    DocumentType = DocumentsType.Passport
                 }
             };
 

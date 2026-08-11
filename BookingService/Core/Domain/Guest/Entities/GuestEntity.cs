@@ -1,11 +1,12 @@
-﻿using Domain.Exceptions;
-using Domain.ValueObjects;
-using Domain.Utils;
-using Domain.Ports;
+﻿using Domain.Utils;
+using Domain.Guest.ValueObjects;
+using Domain.Guest.Ports;
+using Domain.Guest.Exceptions;
+using Domain.Shared.Exceptions;
 
-namespace Domain.Entities
+namespace Domain.Guest.Entities
 {
-    public class Guest
+    public class GuestEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -23,7 +24,7 @@ namespace Domain.Entities
             {
                 throw new MissingRequiredInformationException();
             }
-            if (UtilsEmail.ValidateEmail(this.Email) == false)
+            if (UtilsEmail.ValidateEmail(Email) == false)
             {
                 throw new InvalidEmailException();
             }
@@ -31,9 +32,9 @@ namespace Domain.Entities
         public async Task Save(IGuestRepository guestRepository)
         {
             ValidateState();
-            if (this.Id == 0)
+            if (Id == 0)
             {
-                this.Id = await guestRepository.Create(this);
+                Id = await guestRepository.Create(this);
             }
             else
             {

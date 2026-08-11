@@ -7,5 +7,6 @@ namespace Application.Guest.Ports
     {
         Task<GuestResponse> CreateGuest(CreateGuestRequest request);
         Task<GuestResponse> GetGuest(int id);
+        Task<GuestResponse> GetGuestByName(string name);
     }
 }

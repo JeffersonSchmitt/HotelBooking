@@ -1,11 +1,13 @@
-﻿using Domain.Enums;
-using Action = Domain.Enums.Action;
+﻿using Domain.Booking.Enums;
+using Action = Domain.Booking.Enums.Action;
+using Domain.Guest.Entities;
+using Domain.Room.Entities;
 
 namespace Domain.Entities
 {
-    public class Booking
+    public class BookingEntity
     {
-        public Booking()
+        public BookingEntity()
         {
             this.Status = Status.Created;
         }
@@ -14,8 +16,8 @@ namespace Domain.Entities
         public DateTime PlacedAt { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-        public Room Room { get; set; }
-        public Guest Guest { get; set; }
+        public RoomEntity Room { get; set; }
+        public GuestEntity Guest { get; set; }
         private Status Status { get; set; }
 
         public Status CurrentStatus
@@ -23,7 +25,7 @@ namespace Domain.Entities
             get { return this.Status; }
         }
 
-        public void ChangeState(Enums.Action action)
+        public void ChangeState(Action action)
         {
             this.Status = (this.Status, action) switch
             {
