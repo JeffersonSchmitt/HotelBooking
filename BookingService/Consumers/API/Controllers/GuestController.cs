@@ -53,7 +53,14 @@ namespace API.Controllers
             _logger.LogError("Error creating guest: {ErrorCode}", result.ErrorCode);
             return BadRequest(500);
         }
+        [HttpGet(Name = "GetGuest")]
+        public async Task<ActionResult<GuestDTO>> Get(int id)
+        {
+            var result = await _guestManager.GetGuest(id);
 
-
+            if (result.Success) return Ok(result.Data);
+         
+            return NotFound(result);
+        }
     }
 }
