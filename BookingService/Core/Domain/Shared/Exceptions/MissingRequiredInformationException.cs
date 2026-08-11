@@ -1,4 +1,4 @@
-﻿namespace Domain.Exceptions
+﻿namespace Domain.Shared.Exceptions
 {
     public class MissingRequiredInformationException : Exception
     {

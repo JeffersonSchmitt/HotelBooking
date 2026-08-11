@@ -1,5 +1,6 @@
-﻿using Domain.ValueObjects;
-using Entities = Domain.Entities;
+﻿using Domain.Guest.Entities;
+using Domain.Guest.Enums;
+using Domain.Guest.ValueObjects;
 namespace Application.Guest.DTO
 {
     public class GuestDTO
@@ -11,9 +12,9 @@ namespace Application.Guest.DTO
         public string IdNumber { get; set; }
         public int DocumentType { get; set; }
 
-        public static Entities.Guest MapToEntity(GuestDTO guestDTO)
+        public static GuestEntity MapToEntity(GuestDTO guestDTO)
         {
-            return new Entities.Guest
+            return new GuestEntity
             {
                 Id = guestDTO.Id,
                 Name = guestDTO.Name,
@@ -22,11 +23,11 @@ namespace Application.Guest.DTO
                 Document = new PersonId
                 {
                     IdNumber = guestDTO.IdNumber,
-                    DocumentType = (Domain.Enums.DocumentsType)guestDTO.DocumentType
+                    DocumentType = (DocumentsType)guestDTO.DocumentType
                 }
             };
         }
-        public static GuestDTO MapToDto(Entities.Guest guest)
+        public static GuestDTO MapToDto(GuestEntity guest)
         {
             return new GuestDTO
             {

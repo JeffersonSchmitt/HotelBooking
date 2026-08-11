@@ -9,11 +9,11 @@ namespace Data
     {
         public HotelDbContext(DbContextOptions<HotelDbContext> options) : base(options) { }
 
-        public virtual DbSet<Domain.Entities.Guest> Guests { get; set; }
+        public virtual DbSet<Domain.Guest.Entities.GuestEntity> Guests { get; set; }
 
-        public virtual DbSet<Domain.Entities.Room> Rooms { get; set; }
+        public virtual DbSet<Domain.Room.Entities.RoomEntity> Rooms { get; set; }
 
-        public virtual DbSet<Booking> Bookings { get; set; }
+        public virtual DbSet<BookingEntity> Bookings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
