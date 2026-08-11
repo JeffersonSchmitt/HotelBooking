@@ -20,7 +20,7 @@ namespace ApplicationTests
         [Test]
         public async Task HappyPath()
         {
-           
+
             var guestDTO = new GuestDTO
             {
                 Name = "John",
@@ -55,7 +55,7 @@ namespace ApplicationTests
         [TestCase(null)]
         public async Task Should_Return_InvalidPersonDocumentIdException_When_Document_Is_Invalid(string? docNumber)
         {
-           
+
             var guestDTO = new GuestDTO
             {
                 Name = "John",
@@ -87,9 +87,9 @@ namespace ApplicationTests
         [TestCase("Fulano", null, "asdf@gmail.com")]
         [TestCase("Fulano", "surnametest", "")]
         [TestCase("Fulano", "surnametest", null)]
-        public async Task Should_Return_MissingRequiredInformation_When_Docs_Is_Invalid(string? name,string? surname,string? email)
+        public async Task Should_Return_MissingRequiredInformation_When_Docs_Is_Invalid(string? name, string? surname, string? email)
         {
-           
+
             var guestDTO = new GuestDTO
             {
                 Name = name,
@@ -119,7 +119,7 @@ namespace ApplicationTests
         [TestCase("a@")]
         public async Task Should_Return_InvalidEmail_When_Docs_Is_Invalid(string? email)
         {
-           
+
             var guestDTO = new GuestDTO
             {
                 Name = "John",
@@ -144,5 +144,44 @@ namespace ApplicationTests
             Assert.That(res.ErrorCode, Is.EqualTo(Response.ErrorCodes.INVALID_EMAIL));
             Assert.That(res.Message, Is.EqualTo("Invalid E-mail"));
         }
+
+        [Test]
+        public async Task Should_Return_GuestNotFound_When_GuestDoesntExist()
+        {
+            var fakeRepository = new Mock<IGuestRepository>();
+            fakeRepository.Setup(x => x.Get(323)).Returns(Task.FromResult<Guest>(null));
+            _guestManager = new GuestManager(fakeRepository.Object);
+            var res = await _guestManager.GetGuest(323);
+            Assert.IsNotNull(res);
+            Assert.False(res.Success);
+            Assert.That(res.ErrorCode, Is.EqualTo(Response.ErrorCodes.NOT_FOUND));
+            Assert.That(res.Message, Is.EqualTo("Guest not found"));
+        }
+
+        [Test]
+        public async Task Should_Return_Guest_Sucess()
+        {
+            var fakeRepository = new Mock<IGuestRepository>();
+
+            var guest = new Guest
+            {
+                Id = 323,
+                Name = "John",
+                Document = new Domain.ValueObjects.PersonId
+                {
+                    IdNumber = "123456789",
+                    DocumentType = Domain.Enums.DocumentsType.Passport
+                }
+            };
+
+            fakeRepository.Setup(x => x.Get(323)).Returns(Task.FromResult(guest));
+            _guestManager = new GuestManager(fakeRepository.Object);
+            var res = await _guestManager.GetGuest(323);
+            Assert.IsNotNull(res);
+            Assert.True(res.Success);
+            Assert.That(guest.Id, Is.EqualTo(res.Data.Id));
+            Assert.That(guest.Name, Is.EqualTo(res.Data.Name));
+        }
     }
+
 }
