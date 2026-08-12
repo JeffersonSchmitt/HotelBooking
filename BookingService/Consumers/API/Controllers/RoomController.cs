@@ -42,6 +42,10 @@ namespace API.Controllers
             {
                 return BadRequest(result);
             }
+            else if (result.ErrorCode == Application.Response.ErrorCodes.INVALID_PRICE)
+            {
+                return BadRequest(result);
+            }
 
             _logger.LogError("Error creating room: {ErrorCode}", result.ErrorCode);
             return BadRequest(500);
