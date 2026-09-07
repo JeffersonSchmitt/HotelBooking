@@ -6,7 +6,7 @@ namespace Data.Guest
     public class GuestRepository : IGuestRepository
     {
         private HotelDbContext _hotelDbContext;
-        public GuestRepository( HotelDbContext hotelDbContext)
+        public GuestRepository(HotelDbContext hotelDbContext)
         {
             _hotelDbContext = hotelDbContext;
         }

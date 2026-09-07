@@ -1,7 +1,10 @@
 ﻿using Domain.Booking.Enums;
-using Action = Domain.Booking.Enums.Action;
+using Domain.Booking.Exceptions;
+using Domain.Booking.Ports;
 using Domain.Guest.Entities;
 using Domain.Room.Entities;
+using Domain.Shared.Exceptions;
+using Action = Domain.Booking.Enums.Action;
 
 namespace Domain.Entities
 {
@@ -10,6 +13,7 @@ namespace Domain.Entities
         public BookingEntity()
         {
             this.Status = Status.Created;
+            this.PlacedAt = DateTime.UtcNow;
         }
 
         public int Id { get; set; }
@@ -18,12 +22,7 @@ namespace Domain.Entities
         public DateTime End { get; set; }
         public RoomEntity Room { get; set; }
         public GuestEntity Guest { get; set; }
-        private Status Status { get; set; }
-
-        public Status CurrentStatus
-        {
-            get { return this.Status; }
-        }
+        public Status Status { get; set; }
 
         public void ChangeState(Action action)
         {
@@ -36,6 +35,42 @@ namespace Domain.Entities
                 (Status.Cancelled, Action.Reopen) => Status.Created,
                 _ => this.Status,
             };
+        }
+        private void ValidateState()
+        {
+            if (this.PlacedAt == default || this.Start == default || this.End == default || this.Guest == null || this.Room == null)
+            {
+                throw new MissingRequiredInformationException();
+            }
+        }
+        public bool IsValid()
+        {
+            try
+            {
+                ValidateState();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public async Task Save(IBookingRepository bookingRepository)
+        {
+            ValidateState();
+            if (!this.Room.CanBeBooked())
+            {
+                throw new RoomCannotBeBookedException();
+            }
+
+            if (Id == 0)
+            {
+                Id = await bookingRepository.CreateBooking(this);
+            }
+            else
+            {
+                // await guestRepository.Update(this);
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 using Application.Room.Ports;
 using Application.Room.Requests;
 using Application.Room.Responses;
+using Domain.Room.Exceptions;
 using Domain.Room.Ports;
 using Domain.Shared.Exceptions;
 
@@ -48,6 +49,15 @@ namespace Application.Room
                     Success = false,
                     ErrorCode = Response.ErrorCodes.INVALID_PRICE,
                     Message = "Invalid price"
+                };
+            }
+            catch (RoomNotAvailableException)
+            {
+                return new RoomResponse
+                {
+                    Success = false,
+                    ErrorCode = Response.ErrorCodes.IS_NOT_AVAILABLE,
+                    Message = "Room in maintenance"
                 };
             }
             catch (Exception)

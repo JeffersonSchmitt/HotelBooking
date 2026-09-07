@@ -15,7 +15,7 @@ namespace DomainTests.Bookings
         public void ShouldAwaysStatWithCreatedStatus()
         {
             var booking = new BookingEntity();
-            Assert.AreEqual(booking.CurrentStatus, Status.Created);
+            Assert.AreEqual(booking.Status, Status.Created);
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace DomainTests.Bookings
         {
             var booking = new BookingEntity();
             booking.ChangeState(Action.Pay);
-            Assert.AreEqual(booking.CurrentStatus, Status.Paid);
+            Assert.AreEqual(booking.Status, Status.Paid);
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace DomainTests.Bookings
         {
             var booking = new BookingEntity();
             booking.ChangeState(Action.Cancel);
-            Assert.AreEqual(booking.CurrentStatus, Status.Cancelled);
+            Assert.AreEqual(booking.Status, Status.Cancelled);
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace DomainTests.Bookings
             var booking = new BookingEntity();
             booking.ChangeState(Action.Pay); // deixa como Paid
             booking.ChangeState(Action.Finish);
-            Assert.AreEqual(booking.CurrentStatus, Status.Finished);
+            Assert.AreEqual(booking.Status, Status.Finished);
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace DomainTests.Bookings
             var booking = new BookingEntity();
             booking.ChangeState(Action.Pay); // deixa como Paid
             booking.ChangeState(Action.Refund);
-            Assert.AreEqual(booking.CurrentStatus, Status.Refunded);
+            Assert.AreEqual(booking.Status, Status.Refunded);
         }
 
         [Test]
@@ -57,9 +57,9 @@ namespace DomainTests.Bookings
         {
             var booking = new BookingEntity();
             booking.ChangeState(Action.Cancel);
-            Assert.AreEqual(booking.CurrentStatus, Status.Cancelled);
+            Assert.AreEqual(booking.Status, Status.Cancelled);
             booking.ChangeState(Action.Reopen);
-            Assert.AreEqual(booking.CurrentStatus, Status.Created);
+            Assert.AreEqual(booking.Status, Status.Created);
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace DomainTests.Bookings
             var booking = new BookingEntity();
             // Ação inválida para o estado Created — não deve alterar o estado
             booking.ChangeState(Action.Finish);
-            Assert.AreEqual(booking.CurrentStatus, Status.Created);
+            Assert.AreEqual(booking.Status, Status.Created);
         }
     }
 }

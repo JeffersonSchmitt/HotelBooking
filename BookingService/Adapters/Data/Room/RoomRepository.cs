@@ -22,12 +22,18 @@ namespace Data.Room
 
         public Task<RoomEntity> GetRoom(int id)
         {
-            return _hotelDbContext.Rooms.Where(g => g.Id == id).FirstOrDefaultAsync();
+            return _hotelDbContext.Rooms
+                .Include(r => r.Bookings)
+                .Where(g => g.Id == id)
+                .FirstAsync();
         }
 
         public Task<RoomEntity> GetRoomByName(string name)
         {
-            return _hotelDbContext.Rooms.Where(g => g.Name == name).FirstOrDefaultAsync();
+            return _hotelDbContext.Rooms
+                .Include(r => r.Bookings)
+                .Where(g => g.Name == name)
+                .FirstAsync();
         }
     }
 }

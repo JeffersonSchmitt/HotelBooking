@@ -14,12 +14,9 @@
 
   <ItemGroup>
     <Folder Include="Booking\DomainEvents\" />
-    <Folder Include="Booking\Exceptions\" />
     <Folder Include="Booking\ValueObjects\" />
-    <Folder Include="Booking\Ports\" />
     <Folder Include="Guest\DomainEvents\" />
     <Folder Include="Room\DomainEvents\" />
-    <Folder Include="Room\Exceptions\" />
     <Folder Include="Room\ValueObjects\" />
     <Folder Include="Shared\Enum\" />
   </ItemGroup>

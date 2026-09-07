@@ -9,11 +9,18 @@ namespace Data.Guest
         public void Configure(EntityTypeBuilder<GuestEntity> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.OwnsOne(x => x.Document)
-                .Property(x => x.IdNumber);
 
-            builder.OwnsOne(x => x.Document)
-                .Property(x => x.DocumentType);
+            builder.OwnsOne(x => x.Document, document =>
+            {
+                document.Property(x => x.IdNumber);
+                document.Property(x => x.DocumentType);
+            });
+            //builder.HasKey(x => x.Id);
+            //builder.OwnsOne(x => x.Document)
+            //    .Property(x => x.IdNumber);
+
+            //builder.OwnsOne(x => x.Document)
+            //    .Property(x => x.DocumentType);
         }
     }
 }
