@@ -14,7 +14,11 @@
 
             //Rooms error codes 100 199
             INVALID_PRICE = 100,
-            IS_NOT_AVAILABLE = 101
+            IS_NOT_AVAILABLE = 101,
+
+            //payment error codes 200 299
+            PAYMENT_INVALID = 200,
+
         }
         public bool Success { get; set; }
         public string? Message { get; set; }
